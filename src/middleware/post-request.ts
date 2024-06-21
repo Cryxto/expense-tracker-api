@@ -4,7 +4,7 @@ let PostRequestMiddlewareRoute = Router();
 
 const RequestHandlerStore: RequestHandler[] = [
   async function testPostMiddleware(req, res, next) {
-    // console.info('me after middleware post request');
+    console.info('me after middleware post request');
     next();
   }
 ];

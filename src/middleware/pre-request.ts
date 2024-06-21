@@ -6,7 +6,7 @@ const RequestHandlerStore: RequestHandler[] = [
   async function testPreMiddleware(req, res, next) {
     res.message = "pre request middleware then ";
     req.message = "pre request middleware then";
-    console.log('me test middleware pre req');
+    // console.log('me test middleware pre req');
     
     next();
   }

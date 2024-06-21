@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { TodoServiceRoute } from "./service/TodoService";
+import { TodoRoute } from "./controller/Todo/TodoRoute";
 
 let router = Router();
 
@@ -13,8 +13,8 @@ router.get("/hello", async (req, res) => {
   return res.status(200).json({ status: 200, message: "HelloHello" });
 });
 
-router.use(TodoServiceRoute)
+router.use(TodoRoute)
 
-const api = router;
+// const api = router;
 
-export { api };
+export { router };

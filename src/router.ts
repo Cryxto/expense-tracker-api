@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { TodoRoute } from "./controller/Todo/TodoRoute";
+import { ExpenseRoute } from "./controller/Expense/ExpenseRoute";
 
 let router = Router();
 
@@ -13,7 +13,7 @@ let router = Router();
 //   return res.status(200).json({ status: 200, message: "HelloHello" });
 // });
 
-router.use(TodoRoute)
+router.use(ExpenseRoute)
 
 // const api = router;
 

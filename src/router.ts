@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { ExpenseRoute } from "./controller/Expense/ExpenseRoute";
+import { ExpenseRoute } from "./controller/Expense/ExpenseRoute.js";
 
 let router = Router();
 

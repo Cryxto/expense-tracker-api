@@ -1,12 +1,12 @@
 import { Router } from "express";
-import { ExpenseController } from "./ExpenseController";
+import { ExpenseController } from "./ExpenseController.js";
 
 let ExpenseRoute = Router();
 
 ExpenseRoute.use(
   "/expense",
   ExpenseRoute.get("/", ExpenseController.index),
-  ExpenseRoute.get("/create", ExpenseController.create)
+  ExpenseRoute.post("/create", ExpenseController.create)
 );
 
 // ExpenseRoute.get("/Expense", async (req, res) => {

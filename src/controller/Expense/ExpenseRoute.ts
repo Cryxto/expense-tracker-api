@@ -6,7 +6,9 @@ let ExpenseRoute = Router();
 ExpenseRoute.use(
   "/expense",
   ExpenseRoute.get("/", ExpenseController.index),
-  ExpenseRoute.post("/create", ExpenseController.create)
+  ExpenseRoute.post("/create", ExpenseController.create),
+  ExpenseRoute.get("/show", ExpenseController.showByDateRange),
+  ExpenseRoute.get("/show/:id", ExpenseController.show)
 );
 
 // ExpenseRoute.get("/Expense", async (req, res) => {

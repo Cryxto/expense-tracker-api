@@ -3,8 +3,9 @@ import { RequestHandler, Router } from "express";
 let PostRequestMiddlewareRoute = Router();
 
 const RequestHandlerStore: RequestHandler[] = [
-  async function testPostMiddleware(req, res, next) {
-    console.info('me after middleware post request');
+  async function defaultError(req, res, next) {
+    // console.info('me after middleware post request');
+    console.error()
     next();
   }
 ];

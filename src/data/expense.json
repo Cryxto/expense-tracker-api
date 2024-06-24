@@ -1,0 +1,98 @@
+[
+  {
+    "id": "Rw6ZUwrgPR-eUB7xT5LkW",
+    "title": "Monthly Salary",
+    "nominal": 10000000,
+    "type": "income",
+    "category": "salary",
+    "date": "1/1/2024"
+  },
+  {
+    "id": "x6YsufMUCDMgNzRFzpaLe",
+    "title": "Groceries",
+    "nominal": 500000,
+    "type": "expense",
+    "category": "food",
+    "date": "2/15/2024"
+  },
+  {
+    "id": "kQ23L9g6Bd7mSaxZIpamt",
+    "title": "Bus Ticket",
+    "nominal": 3000,
+    "type": "expense",
+    "category": "transport",
+    "date": "3/10/2024"
+  },
+  {
+    "id": "7jWDn_o9XpSr-q4Lnbeon",
+    "title": "Consulting Fee",
+    "nominal": 2000000,
+    "type": "income",
+    "category": "salary",
+    "date": "4/20/2024"
+  },
+  {
+    "id": "tofZ57uEXap-0CnRTr5PW",
+    "title": "Dining Out",
+    "nominal": 150000,
+    "type": "expense",
+    "category": "food",
+    "date": "5/5/2024"
+  },
+  {
+    "id": "Bkq8Qsj1eriFdqc2lnsWu",
+    "title": "Taxi Ride",
+    "nominal": 50000,
+    "type": "expense",
+    "category": "transport",
+    "date": "6/15/2024"
+  },
+  {
+    "id": "22fNFID1ZQWfHsO0np_jN",
+    "title": "Project Bonus",
+    "nominal": 5000000,
+    "type": "income",
+    "category": "salary",
+    "date": "7/20/2024"
+  },
+  {
+    "id": "YTda_1fvMWFTTl2HjMoUo",
+    "title": "Weekly Groceries",
+    "nominal": 600000,
+    "type": "expense",
+    "category": "food",
+    "date": "8/25/2024"
+  },
+  {
+    "id": "sF7NSfUVBDFOFqjKOjEXF",
+    "title": "Train Ticket",
+    "nominal": 20000,
+    "type": "expense",
+    "category": "transport",
+    "date": "9/30/2024"
+  },
+  {
+    "id": "bKUTbC1-aFHfR52UbGrRM",
+    "title": "Freelance Work",
+    "nominal": 3000000,
+    "type": "income",
+    "category": "salary",
+    "date": "10/10/2024"
+  },
+  {
+    "id": "4Fvu7faku-2BlyovwtZgh",
+    "title": "Dinner at Restaurant",
+    "nominal": 200000,
+    "type": "expense",
+    "category": "food",
+    "date": "11/20/2024"
+  },
+  {
+    "id": "l5BysPo0TTMERBx4Yz6P9",
+    "title": "Car Maintenance",
+    "nominal": 800000,
+    "type": "expense",
+    "category": "transport",
+    "date": "12/25/2024"
+  }
+]

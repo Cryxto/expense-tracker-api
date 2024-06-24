@@ -105,12 +105,12 @@ const ExpenseController = {
       })
     }
   },
-  showByDateCategory: async (req: Request, res: Response): Promise<void> => {
+  showByCategory: async (req: Request, res: Response): Promise<void> => {
     // const expense = 
     try {
       // console.log(req.query.from, req.query.to);
       
-      const data  = await expense.getDataByDateRange(req.query.from as string, req.query.to as string)
+      const data  = await expense.getDataByCategory(req.params.category)
       if (data) {
         res.status(200).send({
           code: 200,

@@ -6,7 +6,8 @@ const RequestHandlerStore: RequestHandler[] = [
   async function defaultError(req, res, next) {
     // console.info('me after middleware post request');
     console.error()
-    next();
+    // res.status(404).send({message:'not found'})
+    // next();
   }
 ];
 

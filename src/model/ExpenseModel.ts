@@ -284,6 +284,23 @@ export class Expense {
     return theData;
   }
 
+  public async getDataByCategory(category: string): Promise<ExpenseInterface[]>{
+    await this.refreshData();
+    let theData: ExpenseInterface[] = [];
+    try {
+      const jsonData = await readFile(expenseJSON, "utf-8");
+      if (jsonData) {
+        this.data = JSON.parse(jsonData);
+      }
+      const data = this.data.filter((e) => e.category === category);
+      theData = data;
+    } catch (error: any) {
+      console.error(error);
+      this.error = error;
+    }
+    return theData;
+  }
+
   public async addData(record: ExpenseInterface) {
     try {
       // const data = this.data

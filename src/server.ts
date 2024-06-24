@@ -4,6 +4,7 @@ import { router } from "./router.js";
 import { PreRequestMiddlewareRoute } from "./middleware/pre-request.js";
 import { PostRequestMiddlewareRoute } from "./middleware/post-request.js";
 import { initiateData } from "./model/ExpenseModel.js";
+import { ErrorRequestMiddlewareRoute } from "./middleware/error-request.js";
 
 config();
 
@@ -13,6 +14,7 @@ app.use(json())
 app.use(PreRequestMiddlewareRoute);
 app.use(PostRequestMiddlewareRoute);
 app.use("/api/v1", router);
+app.use(ErrorRequestMiddlewareRoute)
 
 app.listen(port, () => {
   initiateData()

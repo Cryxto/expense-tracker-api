@@ -13,7 +13,7 @@ let router = Router();
 //   return res.status(200).json({ status: 200, message: "HelloHello" });
 // });
 
-router.use(ExpenseRoute)
+router.use('/expense',ExpenseRoute)
 
 // const api = router;
 

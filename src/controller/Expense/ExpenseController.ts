@@ -83,7 +83,32 @@ const ExpenseController = {
   showByDateRange: async (req: Request, res: Response): Promise<void> => {
     // const expense = 
     try {
-      console.log(req.query.from, req.query.to);
+      // console.log(req.query.from, req.query.to);
+      
+      const data  = await expense.getDataByDateRange(req.query.from as string, req.query.to as string)
+      if (data) {
+        res.status(200).send({
+          code: 200,
+          message: "data found",
+          data: data
+        })
+      } else {
+        res.status(404).send({
+          code: 404,
+          message: "data not found",
+        })
+      }
+    } catch (error) {
+      res.status(500).send({
+        code: 500,
+        message: "internal server error",
+      })
+    }
+  },
+  showByDateCategory: async (req: Request, res: Response): Promise<void> => {
+    // const expense = 
+    try {
+      // console.log(req.query.from, req.query.to);
       
       const data  = await expense.getDataByDateRange(req.query.from as string, req.query.to as string)
       if (data) {

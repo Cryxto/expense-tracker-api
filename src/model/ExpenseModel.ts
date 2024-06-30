@@ -1,25 +1,45 @@
 import { readFile, writeFile } from "fs/promises";
 import { nanoid } from "nanoid";
+import { ExpenseCategory,  ExpenseCategoryOutInterface,  initialCategory, typeCashFlow } from "./ExpenseCategoryModel.js";
 const expenseJSON = "./src/data/expense.json";
 
-enum typeCashFlow {
-  income = "income",
-  expense = "expense",
-}
 
-enum categoryNeeds {
-  salary = "salary",
-  food = "food",
-  transport = "transport",
-}
+
+// enum theExpenseCategory {
+//   salary = "salary",
+//   food = "food",
+//   transport = "transport",
+// }
+
+const theExpenseCategory = new ExpenseCategory()
 
 export interface ExpenseInterface {
   id?: string;
   title: string;
   nominal: number;
   type: typeCashFlow;
-  category: categoryNeeds;
+  category: ExpenseCategoryOutInterface;
   date: Date | string;
+}
+
+export interface ExpenseInterfaceRecord {
+  id?: string;
+  title: string;
+  nominal: number;
+  type: typeCashFlow;
+  category: string;
+  date: Date | string;
+}
+
+export async function RecordTransformer(record:ExpenseInterfaceRecord) : Promise<ExpenseInterface> {
+  return {
+    id: record.id,
+    title: record.title,
+    nominal: record.nominal,
+    type: record.type,
+    category: await theExpenseCategory.getDataAbsolutely(record.category),
+    date: record.date
+  }
 }
 
 const initialData: ExpenseInterface[] = [
@@ -28,7 +48,7 @@ const initialData: ExpenseInterface[] = [
     title: "Monthly Salary",
     nominal: 10000000, // 10,000,000 IDR
     type: typeCashFlow.income,
-    category: categoryNeeds.salary,
+    category: {...initialCategory['salary']},
     date: new Date("2024-01-01").toLocaleDateString(),
   },
   {
@@ -36,7 +56,7 @@ const initialData: ExpenseInterface[] = [
     title: "Groceries",
     nominal: 500000, // 500,000 IDR
     type: typeCashFlow.expense,
-    category: categoryNeeds.food,
+    category: {...initialCategory['food']},
     date: new Date("2024-02-15").toLocaleDateString(),
   },
   {
@@ -44,7 +64,7 @@ const initialData: ExpenseInterface[] = [
     title: "Bus Ticket",
     nominal: 3000, // 3,000 IDR
     type: typeCashFlow.expense,
-    category: categoryNeeds.transport,
+    category: {...initialCategory['transport']},
     date: new Date("2024-03-10").toLocaleDateString(),
   },
   {
@@ -52,7 +72,7 @@ const initialData: ExpenseInterface[] = [
     title: "Consulting Fee",
     nominal: 2000000, // 2,000,000 IDR
     type: typeCashFlow.income,
-    category: categoryNeeds.salary,
+    category: {...initialCategory['salary']},
     date: new Date("2024-04-20").toLocaleDateString(),
   },
   {
@@ -60,7 +80,7 @@ const initialData: ExpenseInterface[] = [
     title: "Dining Out",
     nominal: 150000, // 150,000 IDR
     type: typeCashFlow.expense,
-    category: categoryNeeds.food,
+    category: {...initialCategory['food']},
     date: new Date("2024-05-05").toLocaleDateString(),
   },
   {
@@ -68,7 +88,7 @@ const initialData: ExpenseInterface[] = [
     title: "Taxi Ride",
     nominal: 50000, // 50,000 IDR
     type: typeCashFlow.expense,
-    category: categoryNeeds.transport,
+    category: {...initialCategory['transport']},
     date: new Date("2024-06-15").toLocaleDateString(),
   },
   {
@@ -76,7 +96,7 @@ const initialData: ExpenseInterface[] = [
     title: "Project Bonus",
     nominal: 5000000, // 5,000,000 IDR
     type: typeCashFlow.income,
-    category: categoryNeeds.salary,
+    category: {...initialCategory['salary']},
     date: new Date("2024-07-20").toLocaleDateString(),
   },
   {
@@ -84,7 +104,7 @@ const initialData: ExpenseInterface[] = [
     title: "Weekly Groceries",
     nominal: 600000, // 600,000 IDR
     type: typeCashFlow.expense,
-    category: categoryNeeds.food,
+    category: {...initialCategory['food']},
     date: new Date("2024-08-25").toLocaleDateString(),
   },
   {
@@ -92,7 +112,7 @@ const initialData: ExpenseInterface[] = [
     title: "Train Ticket",
     nominal: 20000, // 20,000 IDR
     type: typeCashFlow.expense,
-    category: categoryNeeds.transport,
+    category: {...initialCategory['transport']},
     date: new Date("2024-09-30").toLocaleDateString(),
   },
   {
@@ -100,7 +120,7 @@ const initialData: ExpenseInterface[] = [
     title: "Freelance Work",
     nominal: 3000000, // 3,000,000 IDR
     type: typeCashFlow.income,
-    category: categoryNeeds.salary,
+    category: {...initialCategory['salary']},
     date: new Date("2024-10-10").toLocaleDateString(),
   },
   {
@@ -108,7 +128,7 @@ const initialData: ExpenseInterface[] = [
     title: "Dinner at Restaurant",
     nominal: 200000, // 200,000 IDR
     type: typeCashFlow.expense,
-    category: categoryNeeds.food,
+    category: {...initialCategory['food']},
     date: new Date("2024-11-20").toLocaleDateString(),
   },
   {
@@ -116,7 +136,7 @@ const initialData: ExpenseInterface[] = [
     title: "Car Maintenance",
     nominal: 800000, // 800,000 IDR
     type: typeCashFlow.expense,
-    category: categoryNeeds.transport,
+    category: {...initialCategory['transport']},
     date: new Date("2024-12-25").toLocaleDateString(),
   },
 ];
@@ -126,14 +146,14 @@ const schemaExample = {
   title: "John Doe",
   nominal: 20000,
   type: typeCashFlow.income,
-  category: categoryNeeds.food,
+  category: {...initialCategory['food']},
   date: new Date(),
 };
 
 export async function initiateData() {
   try {
     const jsonData = await readFile(expenseJSON, "utf-8");
-    // console.log(jsonData);
+    // console.log(Object.keys(initialCategory['transport']));
 
     if (!jsonData) {
       await writeFile(expenseJSON, JSON.stringify(initialData));
@@ -143,25 +163,27 @@ export async function initiateData() {
   }
 }
 
-export async function expenseSchemaValidation(record: ExpenseInterface) {
+export async function expenseSchemaValidation(record:ExpenseInterfaceRecord) {
   let message = { allPassed: true, error: {} };
   for (var key in record) {
     if (key !== "type" && key !== "category" && key !== "date") {
       if (typeof record[key as keyof ExpenseInterface] !== typeof schemaExample[key as keyof ExpenseInterface]) {
         message.allPassed = false;
-        message.error = { ...message.error, [key]: "wrong type" };
+        message.error = { ...message.error, [key]: "wrong type of schema key" };
       } else {
         if (typeof new Date(record.date) !== typeof schemaExample.date) {
           message.allPassed = false;
-          message.error = { ...message.error, date: "wrong type" };
+          message.error = { ...message.error, date: "wrong type of date type" };
         }
-        if (!categoryNeeds[record.category]) {
+        if (!await theExpenseCategory.getData(record.category)) {
+          console.log(await theExpenseCategory.getData(record.category));
+          
           message.allPassed = false;
-          message.error = { ...message.error, category: "wrong type" };
+          message.error = { ...message.error, category: "the category does not exist" };
         }
         if (!typeCashFlow[record.type]) {
           message.allPassed = false;
-          message.error = { ...message.error, type: "wrong type" };
+          message.error = { ...message.error, type: "wrong type of cashflow type" };
         }
       }
     }
@@ -174,8 +196,9 @@ export class Expense {
   private data: ExpenseInterface[] = [];
   private error: any;
   constructor() {
-    this.initData();
-    this.getAllData();
+    // this.initData();
+    // this.getAllData();
+    this.refreshData()
   }
 
   public getError() {
@@ -187,6 +210,15 @@ export class Expense {
       if (!jsonData) {
         await writeFile(expenseJSON, JSON.stringify(initialData));
       }
+    } catch (error) {
+      console.error(error);
+      this.error = error;
+    }
+  }
+  async writeData(): Promise<void|boolean> {
+    try {
+      await writeFile(expenseJSON, JSON.stringify(this.data));
+      await this.refreshData();
     } catch (error) {
       console.error(error);
       this.error = error;
@@ -204,25 +236,12 @@ export class Expense {
     }
   }
   public async getAllData(): Promise<ExpenseInterface[]> {
-    try {
-      const jsonData = await readFile(expenseJSON, "utf-8");
-      if (jsonData) {
-        this.data = JSON.parse(jsonData);
-      }
-    } catch (error: any) {
-      console.error(error);
-      this.error = error;
-    }
     return this.data;
   }
   public async getData(id: string): Promise<ExpenseInterface | {}> {
     await this.refreshData();
     let theData = {};
     try {
-      const jsonData = await readFile(expenseJSON, "utf-8");
-      if (jsonData) {
-        this.data = JSON.parse(jsonData);
-      }
       const data = this.data.filter((e) => e.id === id);
       theData = { ...data[0] };
     } catch (error: any) {
@@ -231,24 +250,25 @@ export class Expense {
     }
     return theData;
   }
-  public async getDataByDateRange(from: string, to: string): Promise<ExpenseInterface[]> {
+  public async getDataByDateRange(from: string, to: string): Promise<{"data in range":ExpenseInterface[],sum:number}> {
     await this.refreshData();
     let theData: ExpenseInterface[] = [];
+    let sum : number = 0
     try {
       const dateFrom = new Date(from);
       const dateTo = new Date(to);
-      console.log("Date on model : ", dateFrom, dateTo);
+      // console.log("Date on model : ", dateFrom, dateTo);
 
-      const jsonData = await readFile(expenseJSON, "utf-8");
-      if (jsonData) {
-        this.data = JSON.parse(jsonData);
-      }
-
+      // const jsonData = await readFile(expenseJSON, "utf-8");
+      // if (jsonData) {
+      //   this.data = JSON.parse(jsonData);
+      // }
       if (isNaN(dateFrom.getTime()) || isNaN(dateTo.getTime())) {
         if (!isNaN(dateFrom.getTime())) {
           theData = this.data.filter((e) => {
             const dataDate = new Date(e.date);
             if (dataDate >= dateFrom) {
+              sum+=e.nominal
               return e;
             }
           });
@@ -256,6 +276,7 @@ export class Expense {
           theData = this.data.filter((e) => {
             const dataDate = new Date(e.date);
             if (dataDate <= dateTo) {
+              sum+=e.nominal
               return e;
             }
           });
@@ -266,6 +287,7 @@ export class Expense {
         theData = this.data.filter((e) => {
           const dataDate = new Date(e.date);
           if (dataDate <= dateTo && dataDate >= dateFrom) {
+            sum+=e.nominal
             return e;
           }
         });
@@ -281,36 +303,39 @@ export class Expense {
       console.error(error);
       this.error = error;
     }
-    return theData;
+    return { sum,"data in range":theData};
   }
 
-  public async getDataByCategory(category: string): Promise<ExpenseInterface[]>{
+  public async getDataByCategory(category: string): Promise<{"data in range":ExpenseInterface[],sum:number}>{
     await this.refreshData();
     let theData: ExpenseInterface[] = [];
+    let sum : number = 0
     try {
-      const jsonData = await readFile(expenseJSON, "utf-8");
-      if (jsonData) {
-        this.data = JSON.parse(jsonData);
-      }
-      const data = this.data.filter((e) => e.category === category);
+      // const jsonData = await readFile(expenseJSON, "utf-8");
+      // if (jsonData) {
+      //   this.data = JSON.parse(jsonData);
+      // }
+      const data = this.data.filter((e) => {
+        if(e.category.key === category){
+          sum+=e.nominal; 
+          return e
+        }
+      });
       theData = data;
     } catch (error: any) {
       console.error(error);
       this.error = error;
     }
-    return theData;
+    return { sum,"data in range":theData};
   }
 
-  public async addData(record: ExpenseInterface) {
+  public async addData(record: ExpenseInterfaceRecord) {
     try {
-      // const data = this.data
-      await this.getAllData()
-        .then(() => this.data.push(record))
-        .catch((e) => {
-          this.error = e;
-        });
-      // this.data = data
-      await writeFile(expenseJSON, JSON.stringify(this.data));
+      theExpenseCategory.refreshData()
+      const transformed = await RecordTransformer(record)
+      this.data.push(transformed)
+      
+      this.writeData()
       return true;
     } catch (error) {
       this.error = error;

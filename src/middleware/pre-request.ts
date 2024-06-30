@@ -9,10 +9,10 @@ const RequestHandlerStore: RequestHandler[] = [
     // console.log('me test middleware pre req');
     next();
   },
-  async function intitTheData(req,res,next) {
-    initiateData()
-    next()
-  }
+  // async function intitTheData(req,res,next) {
+  //   initiateData()
+  //   next()
+  // }
 ];
 
 PreRequestMiddlewareRoute.use(...RequestHandlerStore);

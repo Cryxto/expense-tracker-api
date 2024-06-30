@@ -5,6 +5,8 @@ let PostRequestMiddlewareRoute = Router();
 const RequestHandlerStore: RequestHandler[] = [
   async function defaultError(req, res, next) {
     // console.info('me after middleware post request');
+    // console.log(req.params.category);
+    
     console.error()
     // res.status(404).send({message:'not found'})
     // next();

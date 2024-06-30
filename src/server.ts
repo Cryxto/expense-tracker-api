@@ -5,6 +5,7 @@ import { PreRequestMiddlewareRoute } from "./middleware/pre-request.js";
 import { PostRequestMiddlewareRoute } from "./middleware/post-request.js";
 import { initiateData } from "./model/ExpenseModel.js";
 import { ErrorRequestMiddlewareRoute } from "./middleware/error-request.js";
+import { InitExpenseCategory } from "./model/ExpenseCategoryModel.js";
 
 config();
 
@@ -16,8 +17,9 @@ app.use(PostRequestMiddlewareRoute);
 app.use("/api/v1", router);
 app.use(ErrorRequestMiddlewareRoute)
 
-app.listen(port, () => {
-  initiateData()
+app.listen(port, async () => {
+  await InitExpenseCategory()
+  await initiateData()
   console.log(`Example app listening on port ${port}`);
   console.log(`URL : http://localhost:${port}`);
 });

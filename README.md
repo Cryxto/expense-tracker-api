@@ -16,3 +16,4 @@ An beginner API exercise that made by typescript and express to CRUD an JSON fil
 - There are many part of the code that's not optimal and hardcoded
 - The logic need more improvements
 - This kinda a bit spaghetti i think 
+- The Expense Category Full CRUD functionality to server request and its endpoint not ready yet, it is only for Expense CRUD purpose from the time this README.md written until it is touched `:D`

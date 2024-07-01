@@ -134,13 +134,13 @@ export class ExpenseCategory {
     }
   }
 
-  async getData(category: string): Promise<ExpenseCategoryOutInterface | false> {
+  async getData(category: string): Promise<{found:boolean,data:ExpenseCategoryOutInterface}> {
     // await this.refreshData();
     await this.initIfThisDataNotExist()
     if (this.data[category]) {
-      return { ...this.data[category] };
+      return { found:true ,data:this.data[category] };
     }
-    return false;
+    return { found:false ,data:this.data[category] };
   }
 
   async getDataAbsolutely(category: string): Promise<ExpenseCategoryOutInterface> {

@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
-import { Expense, ExpenseInterface, ExpenseInterfaceRecord, expenseSchemaValidation } from "../../model/ExpenseModel.js";
+import { Expense, ExpenseDetailedInterface, ExpenseRecordInterface, expenseSchemaValidation, expenseSchemaValidationNullable } from "../../model/ExpenseModel.js";
 import { nanoid } from "nanoid";
 
 const expense = new Expense();
 const ExpenseController = {
   create: async (req: Request, res: Response): Promise<void> => {
     try {
-      let requestData: ExpenseInterfaceRecord = req.body;
+      let requestData: ExpenseRecordInterface = req.body;
       // console.log(requestData);
       
       requestData.id = nanoid()
@@ -29,6 +29,79 @@ const ExpenseController = {
     } catch (error) {
       console.error(error+' ,model error : '+expense.getError());
       res.status(400).send({
+        code:400,
+        message: error+' ,model error = '+expense.getError()
+      })
+    }
+
+  },
+  delete: async (req: Request, res: Response): Promise<Response> => {
+    try {
+      if (!(await expense.getData(req.params.id!)).found) {
+        return res.status(404).send({
+          code:404,
+          message: "id not found"
+        })
+      }
+      const afterDeleted = await expense.deleteData(req.params.id!)
+      if (afterDeleted) {
+        return res.status(201).send({
+          code:200,
+          message: 'Deleted'
+        })
+      }
+      return res.status(500).send({
+        code:500,
+        message: 'Unexpected behaviour'
+      })
+    } catch (error) {
+      console.error(error+' ,model error : '+expense.getError());
+      return res.status(400).send({
+        code:400,
+        message: error+' ,model error = '+expense.getError()
+      })
+    }
+
+  },
+  update: async (req: Request, res: Response): Promise<Response> => {
+    try {
+      let requestData: ExpenseRecordInterface = req.body;
+      // console.log(requestData);
+      
+      // requestData.id = nanoid()
+      
+
+      const validatedData = await expenseSchemaValidationNullable(requestData)
+      
+      if (!(await expense.getData(requestData.id!)).found) {
+        return res.status(404).send({
+          code:404,
+          message: "id not found"
+        })
+      }
+      if (!validatedData.allPassed) {
+        return res.status(400).send({
+          code: 400,
+          message: validatedData.error
+        })
+      } else {
+        const updateState = await expense.updateData(requestData)
+        if (!updateState) {
+          return res.status(404).send({
+            code:404,
+            message: expense.getError()
+          })
+        }
+        return res.status(201).send({
+          code:201,
+          message: 'Updated'
+        })
+      }
+
+     
+    } catch (error) {
+      console.error(error+' ,model error : '+expense.getError());
+      return res.status(400).send({
         code:400,
         message: error+' ,model error = '+expense.getError()
       })
@@ -61,7 +134,7 @@ const ExpenseController = {
     // const expense = 
     try {
       const data  = await expense.getData(req.params.id)
-      if (data) {
+      if (data.found) {
         res.status(200).send({
           code: 200,
           message: "data found by id",
@@ -95,7 +168,7 @@ const ExpenseController = {
               style: 'currency',
               currency: 'IDR',
             }),
-            "data in range":data["data in range"]
+            "data_in_range":data["data_in_range"]
           }
         })
       } else {
@@ -118,9 +191,8 @@ const ExpenseController = {
       // console.log(req.query.from, req.query.to);
       
       const data  = await expense.getDataByCategory(req.params.category)
-      if (data && data.sum>0) {
+      if (data && data.sum!==0) {
         // console.log('das\n',data);
-        
         res.status(200).send({
           code: 200,
           message: "data found by category",
@@ -129,7 +201,7 @@ const ExpenseController = {
               style: 'currency',
               currency: 'IDR',
             }),
-            "data in range":data["data in range"]
+            "data_in_range":data["data_in_range"]
           }
         })
       } else {

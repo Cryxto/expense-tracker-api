@@ -431,6 +431,7 @@ export class Expense {
       theExpenseCategory.refreshData();
       // const transformed = await RecordToExpense(record)
       // this.data.push(transformed)
+      record.date = new Date(record.date).toLocaleDateString()
       this.data.push(record);
 
       this.writeData();
@@ -457,6 +458,9 @@ export class Expense {
           keys.forEach((key) => {
             if (key !== "id" && record[key as keyof ExpenseRecordInterface] !== undefined) {
               (e[key] as string | number | Date) = record[key] as string | number | Date;
+              if (key==='date'){
+                e.date = new Date(e.date).toLocaleDateString()
+              }
             }
           });
         }

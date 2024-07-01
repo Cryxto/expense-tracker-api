@@ -1,0 +1,112 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "expense-tracker",
+    "collectionId": "d889e396-ef53-4617-a3e4-3b554c75e6bb",
+    "dateExported": "2024-07-01T17:22:39.071Z",
+    "version": "1.2",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "a26b5636-24f4-4273-8376-44f2b286de65",
+            "colId": "d889e396-ef53-4617-a3e4-3b554c75e6bb",
+            "containerId": "",
+            "name": "expense list",
+            "url": "http://localhost:5000/api/v1/expense/",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2024-06-30T17:41:46.446Z",
+            "modified": "2024-06-30T17:41:46.446Z",
+            "headers": []
+        },
+        {
+            "_id": "84ddf21b-cdd1-447e-8304-f54de1efafe1",
+            "colId": "d889e396-ef53-4617-a3e4-3b554c75e6bb",
+            "containerId": "",
+            "name": "expense details",
+            "url": "http://localhost:5000/api/v1/expense/show/7gtKD1ZDEPkq2jeFDteyn",
+            "method": "GET",
+            "sortNum": 15000,
+            "created": "2024-06-30T17:46:01.606Z",
+            "modified": "2024-07-01T17:02:40.072Z",
+            "headers": []
+        },
+        {
+            "_id": "4248b65f-5849-415d-80a1-80a413e4b5e0",
+            "colId": "d889e396-ef53-4617-a3e4-3b554c75e6bb",
+            "containerId": "",
+            "name": "create new expense data",
+            "url": "http://localhost:5000/api/v1/expense/create",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2024-06-30T17:42:10.171Z",
+            "modified": "2024-07-01T17:10:54.932Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"title\": \"Petrol\",\n  \"nominal\": 55000,\n  \"type\": \"expense\",\n  \"category\": \"transport\",\n  \"date\": \"2024-10-21\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "97ad20f4-83ca-4a02-a616-5ae3d68a0914",
+            "colId": "d889e396-ef53-4617-a3e4-3b554c75e6bb",
+            "containerId": "",
+            "name": "delete expense data",
+            "url": "http://localhost:5000/api/v1/expense/delete/xr_8O4_OTYxYT9PBIMrLH",
+            "method": "DELETE",
+            "sortNum": 35000,
+            "created": "2024-07-01T16:50:26.321Z",
+            "modified": "2024-07-01T16:50:26.321Z",
+            "headers": []
+        },
+        {
+            "_id": "81979e62-082d-486a-89a9-6cec82e0b258",
+            "colId": "d889e396-ef53-4617-a3e4-3b554c75e6bb",
+            "containerId": "",
+            "name": "update expense data",
+            "url": "http://localhost:5000/api/v1/expense/update",
+            "method": "PUT",
+            "sortNum": 37500,
+            "created": "2024-07-01T16:29:20.542Z",
+            "modified": "2024-07-01T17:22:01.182Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"id\":\"1R8v6QBU9JVnecYv2jAzK\",\n  \"title\": \"Car Maintenance\",\n  \"date\":\"12/22/2024\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "b2a4d84e-348a-48b1-9ab1-7a290b06acfe",
+            "colId": "d889e396-ef53-4617-a3e4-3b554c75e6bb",
+            "containerId": "",
+            "name": "get total expense by category",
+            "url": "http://localhost:5000/api/v1/expense/show/category/salary",
+            "method": "GET",
+            "sortNum": 40000,
+            "created": "2024-06-30T17:42:25.656Z",
+            "modified": "2024-07-01T16:59:38.302Z",
+            "headers": []
+        },
+        {
+            "_id": "4c3df9f7-6458-4e36-9762-618d61247c22",
+            "colId": "d889e396-ef53-4617-a3e4-3b554c75e6bb",
+            "containerId": "",
+            "name": "get total expense by date range",
+            "url": "http://localhost:5000/api/v1/expense/show/range?from=6/15/2020",
+            "method": "GET",
+            "sortNum": 50000,
+            "created": "2024-06-30T17:42:17.875Z",
+            "modified": "2024-07-01T16:51:46.442Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "from",
+                    "value": "6/15/2020",
+                    "isPath": false
+                }
+            ]
+        }
+    ],
+    "ref": "wg94nr09h9tl39fvsXxHOcZiSEbC0UY4ZolNtaYnq1ry-qaQfxUwQjyHSIuGBJZsjRywK13VaKilodUNYkPvQA"
+}
